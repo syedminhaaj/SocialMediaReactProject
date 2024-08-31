@@ -5,6 +5,7 @@ import { Main } from "./pages/main/main";
 import { Login } from "./pages/Login";
 import { Navbar } from "./components/navbar";
 import { CreatePost } from "./pages/create-post/create-post";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Main />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/main" element={<Main />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/createPost" element={<CreatePost />}></Route>
         </Routes>

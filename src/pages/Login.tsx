@@ -10,9 +10,8 @@ export const Login = () => {
   };
   return (
     <div>
-      My Login page
+      <h3>Please Sign In using Google Account </h3>
       <div>
-        Sign in with Google
         <button onClick={signInWithGoogle}>Sign in with Google</button>
       </div>
     </div>
