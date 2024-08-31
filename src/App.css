@@ -103,7 +103,7 @@ input,
 textarea {
   padding: 8px 10px;
   margin: 3px 8px 16px 8px;
-  background-color: rgb(164, 47, 47);
+  background-color: cadetblue;
   border: 0px transparent;
   border-radius: 5px;
   color: white;
@@ -114,6 +114,12 @@ textarea {
 .submitForm:hover {
   cursor: pointer;
   color: white;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: white; /* Change this to your desired color */
+  opacity: 1; /* Ensure the placeholder is fully opaque */
 }
 
 /* Post Styles */
