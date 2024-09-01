@@ -162,5 +162,6 @@ textarea::placeholder {
   margin-right: 10px; /* Bold text for the username */
 }
 .post-likes {
+  margin-left: 5px;
   font-style: italic; /* Italic text for likes */
 }
