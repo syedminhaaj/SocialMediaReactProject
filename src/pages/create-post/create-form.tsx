@@ -32,7 +32,7 @@ export const CreateForm = () => {
     navigate("/");
   };
   return (
-    <div className="createPost">
+    <div className="post-container">
       <form onSubmit={handleSubmit(onCreatePost)}>
         <input placeholder="Enter title.." {...register("title")} />
         <textarea
