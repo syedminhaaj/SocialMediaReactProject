@@ -85,12 +85,13 @@
 form {
   margin-top: 50px;
   padding: 30px 20px;
-  width: 320px;
+  width: 600px;
   border-radius: 7px;
   background-color: white;
   backdrop-filter: blur(5px);
   background-color: rgb(43, 0, 255, 0.588);
   overflow: hidden;
+  flex-direction: column;
 }
 .createPost {
   width: 100%;
@@ -129,7 +130,7 @@ textarea::placeholder {
   border-radius: 8px; /* Rounded corners */
   padding: 10px; /* Padding inside the container */
   margin: 20px auto; /* Spacing between posts */
-  max-width: 600px; /* Maximum width of the post */
+  width: 50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
