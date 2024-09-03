@@ -10,6 +10,7 @@ interface IComment {
   comment: any;
   showInput: any;
   postId: string;
+  onCommentCountChange: (count: number) => void;
 }
 
 interface Comment {
@@ -50,6 +51,7 @@ const PostWithComment = (props: IComment) => {
       commentDesc: doc.data().commentDesc,
     }));
     setComments(commentsData);
+    props.onCommentCountChange(commentsData.length);
   };
 
   const handleSendClick = async () => {

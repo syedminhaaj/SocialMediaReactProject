@@ -15,6 +15,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import "./main.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import Badge from "@mui/material/Badge";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { CustomTooltip } from "./Tooltip/CustomTooltip";
 import { CustomIconButton } from "../../Common-Utils/CustomIconButton";
@@ -37,6 +38,7 @@ export const Post = (props: Props) => {
   const [user] = useAuthState(auth);
   const [likes, setLikes] = useState<Like[] | null>(null);
   const [showInput, setShowInput] = useState(false);
+  const [commentCount, setCommentCount] = useState(0); // New state for comments count
   const [comment, setComment] = useState("");
   const likesRef = collection(db, "likes");
   const likesDoc = query(likesRef, where("postId", "==", post?.id));
@@ -115,6 +117,10 @@ export const Post = (props: Props) => {
     return like.userId === user?.uid;
   });
 
+  const handleCommentCountChange = (count: number) => {
+    setCommentCount(count);
+  };
+
   useEffect(() => {
     getLikes();
   }, []);
@@ -148,13 +154,16 @@ export const Post = (props: Props) => {
         />
         {/* <PostWithComment /> */}
         <IconButton onClick={handleIconClick}>
-          <CommentIcon />
+          <Badge badgeContent={commentCount} color="primary">
+            <CommentIcon />
+          </Badge>
         </IconButton>
       </div>
       <PostWithComment
         showInput={showInput}
         comment={comment}
         postId={post?.id}
+        onCommentCountChange={handleCommentCountChange}
       />
     </div>
   );
