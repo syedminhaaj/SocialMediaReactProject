@@ -149,18 +149,17 @@ textarea::placeholder {
 
 .post-footer {
   display: flex;
-  justify-content: center; /* Align username and likes on opposite ends */
-  padding-top: 10px; /* Space above the footer */
-  margin-top: 20px; /* Space between content and footer */
-  border-top: 1px solid #ddd; /* Top border to separate footer from content */
-  font-size: 14px; /* Smaller font size for footer */
-  color: #777; /* Lighter color for footer text */
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid #ddd;
+  justify-content: center;
 }
 .post-username {
   font-weight: bold;
-  margin-right: 10px; /* Bold text for the username */
+  margin-right: 10px;
+  margin-top: 20px;
 }
 .post-likes {
-  margin-left: 5px;
+  margin-left: -42px;
   font-style: italic; /* Italic text for likes */
 }

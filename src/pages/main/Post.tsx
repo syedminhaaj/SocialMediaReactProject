@@ -1,5 +1,6 @@
 import { Post as IPost } from "./main";
 import { auth, db } from "../../config/firebase";
+
 import {
   addDoc,
   getDocs,
@@ -12,6 +13,15 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import "./main.css";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import { CustomTooltip } from "./Tooltip/CustomTooltip";
+import { CustomIconButton } from "../../Common-Utils/CustomIconButton";
+import PostWithComment from "../comment/PostComment";
+import CommentIcon from "@mui/icons-material/Comment";
+import { IconButton, TextField, InputAdornment } from "@mui/material";
+
 interface Props {
   post: IPost;
 }
@@ -19,34 +29,68 @@ interface Props {
 interface Like {
   likeId: string;
   userId: string;
+  username: string;
 }
 
 export const Post = (props: Props) => {
   const { post } = props;
   const [user] = useAuthState(auth);
   const [likes, setLikes] = useState<Like[] | null>(null);
+  const [showInput, setShowInput] = useState(false);
+  const [comment, setComment] = useState("");
   const likesRef = collection(db, "likes");
   const likesDoc = query(likesRef, where("postId", "==", post?.id));
 
+  const handleIconClick = () => {
+    setShowInput(!showInput);
+  };
+
+  const handleInputChange = (event: any) => {
+    setComment(event.target.value);
+  };
+
+  const handleInputBlur = () => {
+    // You can handle the input blur event to save the comment or reset the state
+    setShowInput(false);
+  };
+
   const getLikes = async () => {
     const data = await getDocs(likesDoc);
-    console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    setLikes(
-      data.docs.map((doc) => ({ userId: doc.data().userId, likeId: doc.id }))
-    );
+
+    const likesData = data.docs.map((doc) => ({
+      userId: doc.data().userId,
+      likeId: doc.id,
+      username: doc.data().username,
+    }));
+    setLikes(likesData);
   };
 
   const addLike = async () => {
     try {
+      console.log("user", user);
       const newDoc = await addDoc(likesRef, {
         userId: user?.uid,
         postId: post.id,
+        username: user?.displayName,
       });
       if (user) {
-        setLikes((prev) =>
+        setLikes((prev: any) =>
           prev
-            ? [...prev, { userId: user?.uid, likeId: newDoc.id }]
-            : [{ userId: post.id, likeId: newDoc.id }]
+            ? [
+                ...prev,
+                {
+                  userId: user?.uid,
+                  likeId: newDoc.id,
+                  username: user?.displayName,
+                },
+              ]
+            : [
+                {
+                  userId: post.id,
+                  likeId: newDoc.id,
+                  username: user?.displayName,
+                },
+              ]
         );
       }
     } catch {
@@ -79,6 +123,7 @@ export const Post = (props: Props) => {
   const hasUserLiked = likes?.find((like) => {
     return like.userId === user?.uid;
   });
+
   useEffect(() => {
     getLikes();
   }, []);
@@ -92,11 +137,30 @@ export const Post = (props: Props) => {
       </div>
       <div className="post-footer">
         <p className="post-username">@{post.username}</p>
-        <button onClick={hasUserLiked ? removeLike : addLike}>
-          {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}
+        <button
+          className="button-cls"
+          onClick={hasUserLiked ? removeLike : addLike}
+        >
+          {hasUserLiked ? (
+            <CustomIconButton>
+              <ThumbDownIcon />
+            </CustomIconButton>
+          ) : (
+            <CustomIconButton>
+              <ThumbUpIcon />
+            </CustomIconButton>
+          )}
         </button>
-        {likes && <p className="post-likes"> Likes :{likes?.length}</p>}
+        <CustomTooltip
+          likes={likes?.length}
+          usernames={likes?.map((like) => like.username)}
+        />
+        {/* <PostWithComment /> */}
+        <IconButton onClick={handleIconClick}>
+          <CommentIcon />
+        </IconButton>
       </div>
+      <PostWithComment showInput={showInput} comment={comment} />
     </div>
   );
 };
