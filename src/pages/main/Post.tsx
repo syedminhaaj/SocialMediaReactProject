@@ -45,15 +45,6 @@ export const Post = (props: Props) => {
     setShowInput(!showInput);
   };
 
-  const handleInputChange = (event: any) => {
-    setComment(event.target.value);
-  };
-
-  const handleInputBlur = () => {
-    // You can handle the input blur event to save the comment or reset the state
-    setShowInput(false);
-  };
-
   const getLikes = async () => {
     const data = await getDocs(likesDoc);
 
@@ -160,7 +151,11 @@ export const Post = (props: Props) => {
           <CommentIcon />
         </IconButton>
       </div>
-      <PostWithComment showInput={showInput} comment={comment} />
+      <PostWithComment
+        showInput={showInput}
+        comment={comment}
+        postId={post?.id}
+      />
     </div>
   );
 };
