@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { query, addDoc, collection, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
-import { IconButton, TextField, InputAdornment } from "@mui/material";
+import { IconButton, TextField, InputAdornment, Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import "./PostComment.css";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -23,27 +23,26 @@ const PostWithComment = (props: IComment) => {
   const [user] = useAuthState(auth);
   const [showInput, setShowInput] = useState(false);
   const [comments, setComments] = useState<Comment[] | null>(null);
-  const [commentDesc, setCommentDesc] = useState(""); // New state for the comment description
+  const [commentDesc, setCommentDesc] = useState("");
+  const [showComments, setShowComments] = useState(false);
 
   const commentDbRef = collection(db, "comments");
   const commentsDoc = query(commentDbRef, where("postId", "==", props.postId));
-
-  const handleIconClick = () => {
-    setShowInput(!showInput);
-  };
 
   const handleInputChange = (event: any) => {
     setCommentDesc(event.target.value);
   };
 
   const handleInputBlur = () => {
-    // You can handle the input blur event to save the comment or reset the state
     setShowInput(false);
+  };
+
+  const handleToggleComments = () => {
+    setShowComments(!showComments);
   };
 
   const getAllComments = async () => {
     const data = await getDocs(commentsDoc);
-
     const commentsData = data.docs.map((doc) => ({
       userId: doc.data().userId,
       postId: props.postId,
@@ -63,7 +62,7 @@ const PostWithComment = (props: IComment) => {
       username: user?.displayName,
     });
     setCommentDesc(""); // Clear the input field after sending the comment
-    getAllComments();
+    //getAllComments();
   };
 
   useEffect(() => {
@@ -92,11 +91,17 @@ const PostWithComment = (props: IComment) => {
           }}
         />
       )}
-      {comments?.map((comment, index) => (
-        <div key={index} className="comment">
-          <strong>{comment.username}</strong>: {comment.commentDesc}
-        </div>
-      ))}
+      {comments && comments.length > 0 && (
+        <Button onClick={handleToggleComments} variant="text" color="primary">
+          {showComments ? "Hide Comments" : "Load Comments"}
+        </Button>
+      )}
+      {showComments &&
+        comments?.map((comment, index) => (
+          <div key={index} className="comment">
+            <strong>{comment.username}</strong>: {comment.commentDesc}
+          </div>
+        ))}
     </div>
   );
 };
