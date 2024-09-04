@@ -98,8 +98,9 @@ const PostWithComment = (props: IComment) => {
       )}
       {showComments &&
         comments?.map((comment, index) => (
-          <div key={index} className="comment">
-            <strong>{comment.username}</strong>: {comment.commentDesc}
+          <div className="comment">
+            <span className="username">{comment.username}</span>
+            <p className="comment-text">{comment.commentDesc}</p>
           </div>
         ))}
     </div>
