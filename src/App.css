@@ -48,12 +48,14 @@
   background-color: slateblue;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .navbar .links {
-  text-align: center;
   margin-right: 50px;
+  /* display: flex;
+  align-items: right; */
+  margin-left: 10px;
 }
 
 .links a {
@@ -69,6 +71,7 @@
   justify-content: center;
   align-items: center;
   margin-right: 50px;
+  margin-left: 10px;
 }
 
 .user p {

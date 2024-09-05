@@ -7,6 +7,8 @@ import "./navbar.css";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const auth = getAuth();
+  const [user] = useAuthState(auth);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -19,9 +21,6 @@ export const Navbar = () => {
         console.error("Sign out error", error);
       });
   };
-
-  const auth = getAuth();
-  const [user] = useAuthState(auth);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -56,23 +55,25 @@ export const Navbar = () => {
   }, []);
   return (
     <div className="navbar">
-      <div className="links">
-        {!user ? (
-          <Link to="/login">Login</Link>
-        ) : (
-          <Link to="/createPost">Create Post</Link>
-        )}
-        {!user ? (
-          <Link to="/home">Home</Link>
-        ) : (
-          <Link to="/main">View Post</Link>
-        )}
+      <div>
+        <h3>{auth.currentUser?.displayName}</h3>
       </div>
 
       <div className="user">
+        <span className="links">
+          {!user ? (
+            <Link to="/login">Login</Link>
+          ) : (
+            <Link to="/createPost">Create Post</Link>
+          )}
+          {!user ? (
+            <Link to="/home">Home</Link>
+          ) : (
+            <Link to="/main">View Post</Link>
+          )}
+        </span>
         {user && (
           <div>
-            <p>{auth.currentUser?.displayName}</p>
             <div className="container">
               <div ref={dropdownRef} className="dropdown-container">
                 <img
