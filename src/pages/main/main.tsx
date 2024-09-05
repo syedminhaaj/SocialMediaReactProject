@@ -10,6 +10,9 @@ export interface Post {
   title: string;
   username: string;
   description: string;
+  imageUrl: string;
+  photoUrl: string;
+  time: string;
 }
 
 export const Main = () => {

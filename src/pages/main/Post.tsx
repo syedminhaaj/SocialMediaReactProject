@@ -126,45 +126,47 @@ export const Post = (props: Props) => {
   }, []);
   return (
     <div className="post-container">
-      <div className="post-title">
-        <h1>{post.title}</h1>
-      </div>
-      <div className="post-content">
-        <p>{post.description}</p>
-      </div>
-      <div className="post-footer">
-        <p className="post-username">@{post.username}</p>
-        <button
-          className="button-cls"
-          onClick={hasUserLiked ? removeLike : addLike}
-        >
-          {hasUserLiked ? (
-            <CustomIconButton>
-              <ThumbDownIcon />
-            </CustomIconButton>
-          ) : (
-            <CustomIconButton>
-              <ThumbUpIcon />
-            </CustomIconButton>
-          )}
-        </button>
-        <CustomTooltip
-          likes={likes?.length}
-          usernames={likes?.map((like) => like.username)}
+      <img src={post.imageUrl} alt="post image" />
+      <div className="post-content-wrapper">
+        <div className="post-title">
+          <h1>{post.title}</h1>
+        </div>
+        <div className="post-content">
+          <p>{post.description}</p>
+        </div>
+        <div className="post-footer">
+          <p className="post-username">@{post.username}</p>
+          <button
+            className="button-cls"
+            onClick={hasUserLiked ? removeLike : addLike}
+          >
+            {hasUserLiked ? (
+              <CustomIconButton>
+                <ThumbDownIcon />
+              </CustomIconButton>
+            ) : (
+              <CustomIconButton>
+                <ThumbUpIcon />
+              </CustomIconButton>
+            )}
+          </button>
+          <CustomTooltip
+            likes={likes?.length}
+            usernames={likes?.map((like) => like.username)}
+          />
+          <IconButton onClick={handleIconClick}>
+            <Badge badgeContent={commentCount} color="primary">
+              <CommentIcon />
+            </Badge>
+          </IconButton>
+        </div>
+        <PostWithComment
+          showInput={showInput}
+          comment={comment}
+          postId={post?.id}
+          onCommentCountChange={handleCommentCountChange}
         />
-        {/* <PostWithComment /> */}
-        <IconButton onClick={handleIconClick}>
-          <Badge badgeContent={commentCount} color="primary">
-            <CommentIcon />
-          </Badge>
-        </IconButton>
       </div>
-      <PostWithComment
-        showInput={showInput}
-        comment={comment}
-        postId={post?.id}
-        onCommentCountChange={handleCommentCountChange}
-      />
     </div>
   );
 };

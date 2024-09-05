@@ -29,7 +29,7 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = ({
         arrow
       >
         <div className="likes-text">
-          {likes && <p className="post-likes"> Likes :{likes}</p>}
+          {likes != undefined && <p className="post-likes"> Likes :{likes}</p>}
         </div>
       </Tooltip>
     </div>

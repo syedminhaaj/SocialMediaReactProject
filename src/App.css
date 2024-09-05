@@ -132,7 +132,23 @@ textarea::placeholder {
   padding: 10px; /* Padding inside the container */
   margin: 20px auto; /* Spacing between posts */
   width: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.post-container img {
+  width: 250px; /* Set the width for the image */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensures the image covers the container without stretching */
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+.post-content-wrapper {
+  flex: 1; /* Ensures the post content takes up remaining space */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Title Styling */
@@ -147,7 +163,8 @@ textarea::placeholder {
 .post-content {
   font-size: 16px;
   color: #555;
-  line-height: 1.6; /* Improves readability */
+  line-height: 1.6;
+  flex: 1;
 }
 
 .post-footer {

@@ -36,3 +36,7 @@
 .dropdownItemHover {
   background-color: #f5f5f5;
 }
+
+.navbar h3 {
+  margin-left: 12px;
+}

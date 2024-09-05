@@ -16,7 +16,7 @@ export const Login = () => {
       photoUrl: user.photoURL,
       timestamp: serverTimestamp(),
     });
-    navigate("/");
+    navigate("/main");
   };
   return (
     <div>
