@@ -62,7 +62,7 @@ const PostWithComment = (props: IComment) => {
       username: user?.displayName,
     });
     setCommentDesc(""); // Clear the input field after sending the comment
-    //getAllComments();
+    getAllComments();
   };
 
   useEffect(() => {

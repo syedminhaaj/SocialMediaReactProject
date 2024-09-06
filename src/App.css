@@ -131,7 +131,7 @@ textarea::placeholder {
   border-radius: 8px; /* Rounded corners */
   padding: 10px; /* Padding inside the container */
   margin: 20px auto; /* Spacing between posts */
-  width: 50%;
+  width: 65%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
@@ -174,12 +174,23 @@ textarea::placeholder {
   border-top: 1px solid #ddd;
   justify-content: center;
 }
+
+.post-footer img {
+  width: 7%;
+  border-radius: 100%;
+  margin: 0;
+}
 .post-username {
   font-weight: bold;
   margin-right: 10px;
-  margin-top: 20px;
+  margin-top: 17px;
 }
 .post-likes {
   margin-left: -42px;
-  font-style: italic; /* Italic text for likes */
+  font-style: bold; /* Italic text for likes */
+}
+
+.postuser-image {
+  width: 10%;
+  border-radius: 100%;
 }

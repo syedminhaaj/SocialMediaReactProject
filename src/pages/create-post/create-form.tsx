@@ -58,7 +58,7 @@ export const CreateForm = () => {
       });
     }
 
-    navigate("/");
+    navigate("/main");
   };
   return (
     <div className="post-container">

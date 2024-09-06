@@ -126,15 +126,16 @@ export const Post = (props: Props) => {
   }, []);
   return (
     <div className="post-container">
-      <img src={post.imageUrl} alt="post image" />
+      <img src={post.imageUrl} alt="post image" className="d-flex" />
       <div className="post-content-wrapper">
         <div className="post-title">
-          <h1>{post.title}</h1>
+          <div>{post.title}</div>
         </div>
         <div className="post-content">
           <p>{post.description}</p>
         </div>
         <div className="post-footer">
+          <img src={post.photoUrl} className="" />
           <p className="post-username">@{post.username}</p>
           <button
             className="button-cls"
