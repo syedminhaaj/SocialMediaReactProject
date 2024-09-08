@@ -86,6 +86,9 @@ export const Navbar = () => {
                 </button>
                 {isOpen && (
                   <ul className="dropdown">
+                    <Link className="dropdownItem" to="/profile">
+                      Profile
+                    </Link>
                     <li className="dropdownItem" onClick={handleSignOut}>
                       Logout
                     </li>

@@ -125,17 +125,18 @@ textarea::placeholder {
 }
 
 /* Post Styles */
-.post-container {
-  background-color: #f9f9f9; /* Light background color */
-  border: 1px solid #ddd; /* Light grey border */
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px; /* Padding inside the container */
-  margin: 20px auto; /* Spacing between posts */
+/* .post-container {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 20px auto;
   width: 65%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-}
+  overflow-y: scroll;
+} */
 
 .post-container img {
   width: 250px; /* Set the width for the image */

@@ -11,7 +11,6 @@ import {
   doc,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import "./main.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -21,10 +20,14 @@ import { CustomTooltip } from "./Tooltip/CustomTooltip";
 import { CustomIconButton } from "../../Common-Utils/CustomIconButton";
 import PostWithComment from "../comment/PostComment";
 import CommentIcon from "@mui/icons-material/Comment";
-import { IconButton, TextField, InputAdornment } from "@mui/material";
-
+import { IconButton } from "@mui/material";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import "./css/post.css";
+import ConfirmationModal from "../../Common-Utils/ConfirmationModal";
 interface Props {
   post: IPost;
+  onDelete: (postId: string) => void;
 }
 
 interface Like {
@@ -34,14 +37,16 @@ interface Like {
 }
 
 export const Post = (props: Props) => {
-  const { post } = props;
+  const { post, onDelete } = props;
   const [user] = useAuthState(auth);
   const [likes, setLikes] = useState<Like[] | null>(null);
   const [showInput, setShowInput] = useState(false);
   const [commentCount, setCommentCount] = useState(0); // New state for comments count
   const [comment, setComment] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const likesRef = collection(db, "likes");
   const likesDoc = query(likesRef, where("postId", "==", post?.id));
+  const location = useLocation();
 
   const handleIconClick = () => {
     setShowInput(!showInput);
@@ -121,12 +126,33 @@ export const Post = (props: Props) => {
     setCommentCount(count);
   };
 
+  const deletePost = async () => {
+    try {
+      const postDoc = doc(db, "posts", post.id);
+      await deleteDoc(postDoc);
+      onDelete(post.id);
+      setIsModalOpen(false); // Close modal after deletion
+    } catch (error) {
+      console.error("Error deleting post: ", error);
+    }
+  };
+  const showEditDeleteBtn = location.pathname == "/profile";
+
   useEffect(() => {
     getLikes();
   }, []);
   return (
     <div className="post-container">
       <img src={post.imageUrl} alt="post image" className="d-flex" />
+      {showEditDeleteBtn && (
+        <div className="icons">
+          <FaEdit className="edit-icon" />
+          <FaTrashAlt
+            className="delete-icon"
+            onClick={() => setIsModalOpen(true)}
+          />
+        </div>
+      )}
       <div className="post-content-wrapper">
         <div className="post-title">
           <div>{post.title}</div>
@@ -168,6 +194,13 @@ export const Post = (props: Props) => {
           onCommentCountChange={handleCommentCountChange}
         />
       </div>
+      <ConfirmationModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={deletePost}
+        title="Delete Post"
+        message="Are you sure you want to delete this post?"
+      />
     </div>
   );
 };

@@ -32,13 +32,20 @@ export const Main = () => {
     );
   };
 
+  const handlePostDelete = (postId: string) => {
+    // Remove the deleted post from the state
+    savePostList((prevPosts: any) =>
+      prevPosts.filter((post: any) => post.id !== postId)
+    );
+  };
+
   useEffect(() => {
     getPost();
   }, []);
   return (
     <div>
       {postList?.map((postdata) => (
-        <Post post={postdata} />
+        <Post post={postdata} onDelete={handlePostDelete} />
       ))}
     </div>
   );

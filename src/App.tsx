@@ -6,6 +6,7 @@ import { Login } from "./pages/Login";
 import { Navbar } from "./components/navbar";
 import { CreatePost } from "./pages/create-post/create-post";
 import { Home } from "./pages/Home";
+import { Profile } from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
           <Route path="/createPost" element={<CreatePost />}></Route>
         </Routes>
       </Router>

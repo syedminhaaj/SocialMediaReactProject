@@ -17,7 +17,7 @@
 }
 .dropdown {
   position: absolute;
-  top: 100%;
+  top: 213%;
   left: 0;
   background-color: slateblue;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -32,7 +32,13 @@
   padding: 10px 20px;
   cursor: pointer;
   color: white;
+  text-decoration: none;
+  border-bottom: 1px solid white;
 }
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
 .dropdownItemHover {
   background-color: #f5f5f5;
 }

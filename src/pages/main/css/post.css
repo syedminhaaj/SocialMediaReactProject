@@ -1,0 +1,87 @@
+.post-container {
+  background-color: #f9f9f9; /* Light background color */
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Padding inside the container */
+  margin: 20px auto; /* Spacing between posts */
+  width: 65%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.post-options {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  align-items: center;
+  z-index: 10;
+}
+
+.dots {
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.delete-button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 14px;
+  display: none; /* Hidden initially */
+}
+
+.post-container:hover .post-options {
+  display: flex; /* Show both dots and delete button on hover */
+}
+
+.post-options:hover .delete-button {
+  display: inline; /* Ensure delete button shows when hovering over the post options */
+}
+
+.post-content-wrapper {
+  margin-top: 10px;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.post-container:hover {
+  background-color: #ececec; /* Change background on hover (optional) */
+}
+
+.post-container:hover .icons {
+  display: block;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.icons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+}
+
+.edit-icon,
+.delete-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #666;
+}
+
+.icons .edit-icon:hover,
+.icons .delete-icon:hover {
+  color: #000; /* Change color on hover */
+}
