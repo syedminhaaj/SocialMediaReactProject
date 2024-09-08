@@ -25,6 +25,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import "./css/post.css";
 import ConfirmationModal from "../../Common-Utils/ConfirmationModal";
+import { CreateForm } from "../create-post/create-form";
 interface Props {
   post: IPost;
   onDelete: (postId: string) => void;
@@ -47,6 +48,9 @@ export const Post = (props: Props) => {
   const likesRef = collection(db, "likes");
   const likesDoc = query(likesRef, where("postId", "==", post?.id));
   const location = useLocation();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const showEditDeleteBtn = location.pathname == "/profile";
 
   const handleIconClick = () => {
     setShowInput(!showInput);
@@ -136,7 +140,14 @@ export const Post = (props: Props) => {
       console.error("Error deleting post: ", error);
     }
   };
-  const showEditDeleteBtn = location.pathname == "/profile";
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsEditing(false);
+  };
 
   useEffect(() => {
     getLikes();
@@ -146,7 +157,7 @@ export const Post = (props: Props) => {
       <img src={post.imageUrl} alt="post image" className="d-flex" />
       {showEditDeleteBtn && (
         <div className="icons">
-          <FaEdit className="edit-icon" />
+          <FaEdit className="edit-icon" onClick={handleEditClick} />
           <FaTrashAlt
             className="delete-icon"
             onClick={() => setIsModalOpen(true)}
@@ -201,6 +212,14 @@ export const Post = (props: Props) => {
         title="Delete Post"
         message="Are you sure you want to delete this post?"
       />
+
+      {isEditing && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <CreateForm post={post} onClose={handleCloseForm} />
+          </div>{" "}
+        </div>
+      )}
     </div>
   );
 };

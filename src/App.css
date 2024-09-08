@@ -118,25 +118,15 @@ textarea {
   width: 100px;
 }
 
+.cancel-button {
+  width: 100px;
+}
+
 input::placeholder,
 textarea::placeholder {
   color: white; /* Change this to your desired color */
   opacity: 1; /* Ensure the placeholder is fully opaque */
 }
-
-/* Post Styles */
-/* .post-container {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 20px auto;
-  width: 65%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  overflow-y: scroll;
-} */
 
 .post-container img {
   width: 250px; /* Set the width for the image */
