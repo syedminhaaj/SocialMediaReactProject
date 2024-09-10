@@ -13,6 +13,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import Loader from "../Loader/Loader";
 interface FormProps {
   post?: any;
   onClose: () => void;
@@ -21,6 +22,7 @@ interface FormProps {
 export const CreateForm = ({ post, onClose }: FormProps) => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const postRef = collection(db, "posts");
   const storageRef = image ? ref(storage, `images/${image.name}`) : null;
@@ -54,6 +56,7 @@ export const CreateForm = ({ post, onClose }: FormProps) => {
 
   const onCreatePost = async (data: any) => {
     try {
+      setLoading(true);
       if (post) {
         // Editing an existing post
         const postDoc = doc(db, "posts", post.id);
@@ -91,31 +94,41 @@ export const CreateForm = ({ post, onClose }: FormProps) => {
           });
         }
       }
+      setLoading(false);
       navigate("/main");
     } catch (error) {
       console.error("Error handling post:", error);
     }
-    onClose();
   };
 
   return (
-    <div className="post-container">
-      <form onSubmit={handleSubmit(onCreatePost)}>
-        <input placeholder="Enter title.." {...register("title")} required />
-        <textarea
-          placeholder="Enter description.."
-          {...register("description")}
-          required
-        />
-        <input type="file" accept="image/*" onChange={handleChangeImage} />
-        <input className="submitForm" type="submit" />
-        <input
-          className="cancel-button"
-          type="button"
-          value="Cancel"
-          onClick={onClose} // Ensure you define this function
-        />
-      </form>
-    </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="post-container">
+          <form onSubmit={handleSubmit(onCreatePost)}>
+            <input
+              placeholder="Enter title.."
+              {...register("title")}
+              required
+            />
+            <textarea
+              placeholder="Enter description.."
+              {...register("description")}
+              required
+            />
+            <input type="file" accept="image/*" onChange={handleChangeImage} />
+            <input className="submitForm" type="submit" />
+            <input
+              className="cancel-button"
+              type="button"
+              value="Cancel"
+              onClick={onClose}
+            />
+          </form>
+        </div>
+      )}
+    </>
   );
 };

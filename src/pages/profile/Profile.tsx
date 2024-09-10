@@ -6,15 +6,18 @@ import { Post as IPost } from "../main/main";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { Post } from "../main/Post";
+import Loader from "../Loader/Loader";
 
 export const Profile = () => {
   const auth = getAuth();
-  const [postList, savePostList] = useState<IPost[] | null>(null);
+  const [userList, saveUserList] = useState<IPost[] | null>(null);
+  const [loading, setLoading] = useState(false);
   const postRef = collection(db, "posts");
   const [user] = useAuthState(auth);
   const getPost = async () => {
+    setLoading(true);
     const data = await getDocs(postRef);
-    savePostList(
+    saveUserList(
       data.docs.map(
         (doc) =>
           ({
@@ -23,9 +26,14 @@ export const Profile = () => {
           } as IPost)
       )
     );
+    setLoading(false);
   };
 
-  const testDelete = () => {};
+  const DeletePost = (postId: string) => {
+    saveUserList((prevPosts: any) =>
+      prevPosts.filter((post: any) => post.id !== postId)
+    );
+  };
 
   useEffect(() => {
     getPost();
@@ -45,12 +53,19 @@ export const Profile = () => {
             <p>Email: {user.email}</p>
           </div>
           <h3>List of My Post</h3>
+          {}
           <div>
-            {postList
-              ?.filter((post) => post.userId == auth.currentUser?.uid)
-              .map((postdata) => (
-                <Post post={postdata} onDelete={testDelete} />
-              ))}
+            {loading ? (
+              <Loader />
+            ) : (
+              <>
+                {userList
+                  ?.filter((post) => post.userId == auth.currentUser?.uid)
+                  .map((postdata) => (
+                    <Post post={postdata} onDelete={DeletePost} />
+                  ))}
+              </>
+            )}
           </div>
         </div>
       ) : (

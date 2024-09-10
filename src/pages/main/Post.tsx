@@ -69,7 +69,6 @@ export const Post = (props: Props) => {
 
   const addLike = async () => {
     try {
-      console.log("user", user);
       const newDoc = await addDoc(likesRef, {
         userId: user?.uid,
         postId: post.id,
@@ -134,7 +133,7 @@ export const Post = (props: Props) => {
     try {
       const postDoc = doc(db, "posts", post.id);
       await deleteDoc(postDoc);
-      onDelete(post.id);
+      props.onDelete(post.id);
       setIsModalOpen(false); // Close modal after deletion
     } catch (error) {
       console.error("Error deleting post: ", error);
