@@ -30,4 +30,10 @@
 .comment .comment-text {
   margin: 0;
   padding: 0;
+  margin-left: 50px;
+}
+
+.commentImg {
+  width: 7% !important;
+  border-radius: 100% !important;
 }

@@ -22,7 +22,9 @@ export const Login = () => {
     <div>
       <h3>Please Sign In using Google Account </h3>
       <div>
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <button className="btn btn-primary" onClick={signInWithGoogle}>
+          Sign in with Google
+        </button>
       </div>
     </div>
   );

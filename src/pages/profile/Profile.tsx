@@ -49,10 +49,16 @@ export const Profile = () => {
             className="profile-photo"
           />
           <div className="profile-info">
-            <h3>Username: {user.displayName || "N/A"}</h3>
-            <p>Email: {user.email}</p>
+            <h3>{user.displayName || "N/A"}</h3>
+            <p>
+              <b>Email:</b> {user.email}
+            </p>
           </div>
           <h3>List of My Post</h3>
+          <span>
+            <b>Note:</b> You can edit/delete post by hovering on post and click
+            edit/delete button on top right of the post
+          </span>
           {}
           <div>
             {loading ? (
