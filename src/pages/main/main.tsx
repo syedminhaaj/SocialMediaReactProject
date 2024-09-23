@@ -3,6 +3,13 @@ import { auth, db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { Post } from "./Post";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchPosts,
+  getAllPostReducer,
+  IState,
+} from "../../reducer/mediaSlice";
+import { AppDispatch } from "../../store/store";
 
 export interface Post {
   id: string;
@@ -19,17 +26,10 @@ export const Main = () => {
   const [postList, savePostList] = useState<Post[] | null>(null);
   const postRef = collection(db, "posts");
   const [user] = useAuthState(auth);
-  const getPost = async () => {
-    const data = await getDocs(postRef);
-    savePostList(
-      data.docs.map(
-        (doc) =>
-          ({
-            ...doc.data(),
-            id: doc.id,
-          } as Post)
-      )
-    );
+  const dispatch = useDispatch<AppDispatch>();
+  const postListArray = useSelector((state: IState) => state.posts);
+  const getPost = () => {
+    dispatch(fetchPosts());
   };
 
   const handlePostDelete = (postId: string) => {
@@ -44,7 +44,7 @@ export const Main = () => {
   }, []);
   return (
     <div>
-      {postList?.map((postdata) => (
+      {postListArray?.map((postdata) => (
         <Post post={postdata} onDelete={handlePostDelete} />
       ))}
     </div>

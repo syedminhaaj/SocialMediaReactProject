@@ -13,7 +13,9 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
+import { addPost } from "../../reducer/mediaSlice";
 interface FormProps {
   post?: any;
   onClose: () => void;
@@ -31,6 +33,7 @@ export const CreateForm = ({ post, onClose }: FormProps) => {
     title: yup.string().required("You must enter the title"),
     description: yup.string().required("Description is required"),
   });
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -83,15 +86,26 @@ export const CreateForm = ({ post, onClose }: FormProps) => {
           const uploadTask = uploadBytesResumable(storageRef!, image);
           await uploadTask;
           const url = await getDownloadURL(uploadTask.snapshot.ref);
-          await addDoc(postRef, {
-            title: data.title,
-            description: data.description,
+
+          const postData = {
+            title: data?.title,
+            description: data?.description,
             username: user?.displayName,
             userId: user?.uid,
             photoUrl: auth.currentUser?.photoURL,
             imageUrl: url,
             time: serverTimestamp(),
-          });
+          };
+          await dispatch(addPost(postData));
+          // await addDoc(postRef, {
+          //   title: data.title,
+          //   description: data.description,
+          //   username: user?.displayName,
+          //   userId: user?.uid,
+          //   photoUrl: auth.currentUser?.photoURL,
+          //   imageUrl: url,
+          //   time: serverTimestamp(),
+          // });
         }
       }
       setLoading(false);
